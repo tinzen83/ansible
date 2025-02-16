@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install docker
+    tags: docker,ubuntu
+    package:
+      name:
+        - docker.io
+      state: latest
